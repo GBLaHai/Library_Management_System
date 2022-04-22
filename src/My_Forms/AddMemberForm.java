@@ -161,6 +161,11 @@ public class AddMemberForm extends javax.swing.JFrame {
         jLabel6.setText("Phone Number:");
 
         jTextField_PhoneNumber.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jTextField_PhoneNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField_PhoneNumberKeyTyped(evt);
+            }
+        });
 
         jLabel_EmptyPhoneNumber_.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel_EmptyPhoneNumber_.setForeground(new java.awt.Color(254, 0, 0));
@@ -377,6 +382,13 @@ public class AddMemberForm extends javax.swing.JFrame {
             func.displayImageByPath(jLabel_Image.getWidth(), jLabel_Image.getHeight(), imagePath, jLabel_Image);
         }
     }//GEN-LAST:event_jButton_SelectProfilePicture_ActionPerformed
+
+    private void jTextField_PhoneNumberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_PhoneNumberKeyTyped
+        // allow only numbers on phone jTextfiled
+        if(!Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextField_PhoneNumberKeyTyped
 
     /**
      * @param args the command line arguments

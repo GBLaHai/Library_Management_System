@@ -144,6 +144,9 @@ public class EditMemberForm extends javax.swing.JFrame {
             }
         });
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+
         jLabel2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel2.setText("First name:");
 
@@ -190,6 +193,11 @@ public class EditMemberForm extends javax.swing.JFrame {
         });
 
         jTextField_PhoneNumber.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jTextField_PhoneNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField_PhoneNumberKeyTyped(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel8.setText("Email:");
@@ -476,6 +484,12 @@ public class EditMemberForm extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jButton_SearchActionPerformed
+
+    private void jTextField_PhoneNumberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_PhoneNumberKeyTyped
+        if(!Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextField_PhoneNumberKeyTyped
 
     /**
      * @param args the command line arguments

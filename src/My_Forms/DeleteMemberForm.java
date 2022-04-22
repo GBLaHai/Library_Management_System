@@ -89,6 +89,11 @@ public class DeleteMemberForm extends javax.swing.JFrame {
         jLabel2.setText("Enter the ID:");
 
         jTextField_ID.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jTextField_ID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField_IDKeyTyped(evt);
+            }
+        });
 
         jButton_Delete_.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton_Delete_.setText("Delete Member");
@@ -197,6 +202,12 @@ public class DeleteMemberForm extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButton_Delete_ActionPerformed
+
+    private void jTextField_IDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_IDKeyTyped
+        if(Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextField_IDKeyTyped
 
     /**
      * @param args the command line arguments

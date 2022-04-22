@@ -4,14 +4,10 @@
  */
 package My_Forms;
 
-import My_Classes.DB;
+
 import My_Classes.Func_Class;
+import My_Classes.Users;
 import javax.swing.JOptionPane;
-import java.sql.ResultSet;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -49,8 +45,6 @@ public class LoginForm extends javax.swing.JFrame {
         jTextField_Username = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jPasswordField_Pass = new javax.swing.JPasswordField();
-        jLabel4 = new javax.swing.JLabel();
-        jComboBox_UserType = new javax.swing.JComboBox<>();
         jButton_Login = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -62,26 +56,20 @@ public class LoginForm extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(51, 153, 255));
 
-        jLabel2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel2.setText("Username:");
 
-        jTextField_Username.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jTextField_Username.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         jTextField_Username.setForeground(new java.awt.Color(102, 0, 255));
 
-        jLabel3.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel3.setText("Password:");
 
-        jPasswordField_Pass.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jPasswordField_Pass.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         jPasswordField_Pass.setForeground(new java.awt.Color(102, 0, 255));
 
-        jLabel4.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jLabel4.setText("User Type:");
-
-        jComboBox_UserType.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jComboBox_UserType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "user", "admin", "owner" }));
-
-        jButton_Login.setBackground(new java.awt.Color(248, 148, 6));
-        jButton_Login.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jButton_Login.setBackground(new java.awt.Color(255, 0, 0));
+        jButton_Login.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jButton_Login.setForeground(new java.awt.Color(255, 255, 255));
         jButton_Login.setText("Login ");
         jButton_Login.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -98,12 +86,10 @@ public class LoginForm extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4)
                     .addComponent(jTextField_Username)
                     .addComponent(jPasswordField_Pass)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox_UserType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton_Login, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -118,13 +104,9 @@ public class LoginForm extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPasswordField_Pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox_UserType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addGap(70, 70, 70)
                 .addComponent(jButton_Login)
-                .addContainerGap())
+                .addGap(52, 52, 52))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -170,35 +152,31 @@ public class LoginForm extends javax.swing.JFrame {
         // we will do the user type later
         String username = jTextField_Username.getText();
         String password = String.valueOf(jPasswordField_Pass.getPassword());
-        
-        ResultSet rs;
-        PreparedStatement ps;
-        
-        // the select query
-        String query = "select * from users_table where username = ? and password = ?";
-        
+       
         // check if the fields are empty
-        if(username.trim().equals("") || password.trim().equals("")) {
-            JOptionPane.showMessageDialog(null, "Enter the username and password", "Notification", 2);
+        if(username.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Enter the username", "Notification", 2);
+            jTextField_Username.requestFocus();
+        } else if (password.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Enter the password", "Notification", 2);
+            jPasswordField_Pass.requestFocus();
         }
         else 
         {
-            try {
                 
-                // get connection from class DB
-                ps = DB.getConnection().prepareStatement(query);
-                ps.setString(1, username);
-                ps.setString(2, password);
-                
-                rs = ps.executeQuery();
-                
-                // check if user exist
+                My_Classes.Users user = new Users().tryLogin(username, password);              
+                DashboardForm dash_f = new DashboardForm();
                 
                 // if the user exist
-                if(rs.next()) {
+                if(user != null) {
                     
+                    if(user.getUserType().equalsIgnoreCase("user")) {
+                        dash_f.jLabel_Users_.setVisible(false);
+                        dash_f.jButton_Manage_Users_.setVisible(false);
+                    }
+                    String fullname = user.getFirstName() + " " + user.getLastName();
+                    dash_f.jLabel_Welcome_User_.setText("Welcome " + fullname + " !");
                     // display the dashboard form
-                    DashboardForm dash_f = new DashboardForm();
                     dash_f.setVisible(true);
                     
                     // close the login form (this form)
@@ -209,9 +187,6 @@ public class LoginForm extends javax.swing.JFrame {
                 else {
                     JOptionPane.showMessageDialog(null, "Invalid the username or password", "Notification", 0);
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }//GEN-LAST:event_jButton_LoginActionPerformed
 
@@ -253,10 +228,8 @@ public class LoginForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_Login;
-    private javax.swing.JComboBox<String> jComboBox_UserType;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel_login_logo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

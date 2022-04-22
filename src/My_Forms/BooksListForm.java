@@ -57,9 +57,6 @@ public class BooksListForm extends javax.swing.JFrame {
         Border lableImageHeaderBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(0, 0, 0));
         jLabel_Image.setBorder(lableImageHeaderBorder);
         
-        // add the default image to the jLabel
-        func.displayImageByPath(jLabel_Image.getWidth(), jLabel_Image.getHeight(), "../My_Images/book-default.png", jLabel_Image);
-        
         // display books in the jTable
         populateJtableWithBooks();
     }
