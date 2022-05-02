@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DTO;
+package DAO;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 import java.sql.Connection;
@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  *
  * @author Manh Hai
  */
-public class DB {
+public class DBConnection {
     // create the connnection between the project and mysql database
     // 1 - download the java-mysql connector
     // 2 - add the jar file to the project
@@ -39,7 +39,7 @@ public class DB {
         try {
             connection = (Connection) datasource.getConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return connection;

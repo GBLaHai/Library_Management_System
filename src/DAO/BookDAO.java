@@ -2,148 +2,34 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DTO;
+package DAO;
 
+import DTO.BookDTO;
+import My_Functions.Func_Class;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import java.sql.Statement;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Manh Hai
  */
-public class BooksDTO {
-    private int id;
-    private String isbn;
-    private String name;
-    private int author_id;
-    private int genre_id;
-    private int quantity;
-    private String publisher;
-    private double price;
-    private String date_received;
-    private String description;
-    private byte[] cover;
-
-    public BooksDTO() {
-    }
-
-    public BooksDTO(int id, String isbn, String name, int author_id, int genre_id, int quantity, String publisher, double price, String date_received, String description, byte[] cover) {
-        this.id = id;
-        this.isbn = isbn;
-        this.name = name;
-        this.author_id = author_id;
-        this.genre_id = genre_id;
-        this.quantity = quantity;
-        this.publisher = publisher;
-        this.price = price;
-        this.date_received = date_received;
-        this.description = description;
-        this.cover = cover;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAuthor_id() {
-        return author_id;
-    }
-
-    public void setAuthor_id(int author_id) {
-        this.author_id = author_id;
-    }
-
-    public int getGenre_id() {
-        return genre_id;
-    }
-
-    public void setGenre_id(int genre_id) {
-        this.genre_id = genre_id;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public String getDate_received() {
-        return date_received;
-    }
-
-    public void setDate_received(String date_received) {
-        this.date_received = date_received;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public byte[] getCover() {
-        return cover;
-    }
-
-    public void setCover(byte[] cover) {
-        this.cover = cover;
-    }
-   
+public class BookDAO {
+    DBConnection dBConnection;
     
-    Func_Class func = new Func_Class();
+    My_Functions.Func_Class func = new Func_Class();
     // insert a new book function
     public void addBook(String isbn, String name, int author_id, int genre_id, int quantity, String publisher, double price, String date_received, String description, byte[] cover) {
         
         String insertQuery = "INSERT INTO `books`(`isbn`, `name`, `author_id`, `genre_id`, `quantity`, `publisher`, `price`, `date_received`, `description`, `cover_image`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
-            PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
+            PreparedStatement ps = dBConnection.getConnection().prepareStatement(insertQuery);
             ps.setString(1, isbn);
             ps.setString(2, name);
             ps.setInt(3, author_id);
@@ -161,7 +47,7 @@ public class BooksDTO {
                 JOptionPane.showMessageDialog(null, "Book not added", "Notification", 2);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BooksDTO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BookDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -172,7 +58,7 @@ public class BooksDTO {
         if(cover != null) { // if you want to update image
             editQuery = "UPDATE `books` SET `name`=? ,`author_id`=? ,`genre_id`=? ,`quantity`=? ,`publisher`=? ,`price`=? ,`date_received`=? ,`description`=? ,`cover_image`=? WHERE `isbn` =?";
             try {
-                PreparedStatement ps = DB.getConnection().prepareStatement(editQuery);
+                PreparedStatement ps = dBConnection.getConnection().prepareStatement(editQuery);
                 ps.setString(1, name);
                 ps.setInt(2, author_id);
                 ps.setInt(3, genre_id);
@@ -190,12 +76,12 @@ public class BooksDTO {
                     JOptionPane.showMessageDialog(null, "Book not edited", "Notification", 2);
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(BooksDTO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BookDTO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else { // if not
             editQuery = "UPDATE `books` SET `name`=? ,`author_id`=? ,`genre_id`=? ,`quantity`=? ,`publisher`=? ,`price`=? ,`date_received`=? ,`description`=? WHERE `isbn` =?";
             try {
-                PreparedStatement ps = DB.getConnection().prepareStatement(editQuery);
+                PreparedStatement ps = dBConnection.getConnection().prepareStatement(editQuery);
                 ps.setString(1, name);
                 ps.setInt(2, author_id);
                 ps.setInt(3, genre_id);
@@ -213,7 +99,7 @@ public class BooksDTO {
                     JOptionPane.showMessageDialog(null, "Book not added", "Notification", 2);
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(BooksDTO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BookDTO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -223,7 +109,7 @@ public class BooksDTO {
         
         String removeQuery = "DELETE FROM `books` WHERE `isbn` = ?";
         try {
-            PreparedStatement ps = DB.getConnection().prepareStatement(removeQuery);
+            PreparedStatement ps = dBConnection.getConnection().prepareStatement(removeQuery);
 
             ps.setString(1, isbn);
             
@@ -233,7 +119,7 @@ public class BooksDTO {
                 JOptionPane.showMessageDialog(null, "Book not deleted", "Notification", 2);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BooksDTO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BookDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -250,16 +136,16 @@ public class BooksDTO {
                 return false;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BooksDTO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BookDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return true;
     }
     
-    public BooksDTO searchBookByISBN(String _isbn) {
+    public BookDTO searchBookByISBN(String _isbn) {
         String query = "SELECT * FROM `books` WHERE `isbn` = '"+ _isbn +"'";
         
         ResultSet rs = func.getData(query);
-        BooksDTO book = null;
+        BookDTO book = null;
         
         try {
             if(rs.next()) {
@@ -275,20 +161,20 @@ public class BooksDTO {
                 String description = rs.getString(10);
                 byte[] cover = rs.getBytes(11);
                 
-                book = new BooksDTO(id, isbn, name, author_id, genre_id, quantity, publisher, price, date_received, description, cover);
+                book = new BookDTO(id, isbn, name, author_id, genre_id, quantity, publisher, price, date_received, description, cover);
             } else {
                 return book;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BooksDTO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BookDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return book;
     }
     
     // function to populate an arrayList with books
-    public ArrayList<BooksDTO> bookList() {
-        ArrayList<BooksDTO> bList = new ArrayList<>();
+    public ArrayList<BookDTO> bookList() {
+        ArrayList<BookDTO> bList = new ArrayList<>();
         
         String selectQuery = "SELECT * FROM `books`";
         ResultSet rs;
@@ -297,7 +183,7 @@ public class BooksDTO {
             
             rs = func.getData(selectQuery);
             
-            BooksDTO book;
+            BookDTO book;
             
             while(rs.next()) {
                 int id = rs.getInt(1);
@@ -312,18 +198,18 @@ public class BooksDTO {
                 String description = rs.getString(10);
                 byte[] cover = rs.getBytes(11);
                 
-                book = new BooksDTO(id, isbn, name, author_id, genre_id, quantity, publisher, price, date_received, description, cover);
+                book = new BookDTO(id, isbn, name, author_id, genre_id, quantity, publisher, price, date_received, description, cover);
                 bList.add(book);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BooksDTO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BookDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return bList;
     }
     
-    // get BooksDTO by ID
-    public BooksDTO getBookByID(int _id) throws SQLException {
+    // get BookDTO by ID
+    public BookDTO getBookByID(int _id) throws SQLException {
 
         String selectQuery = "SELECT * FROM `books` WHERE `id` = " + _id;
         
@@ -342,7 +228,7 @@ public class BooksDTO {
                 String description = rs.getString(10);
                 byte[] cover = rs.getBytes(11);
                 
-                BooksDTO book = new BooksDTO(id, isbn, name, author_id, genre_id, quantity, publisher, price, date_received, description, cover);
+                BookDTO book = new BookDTO(id, isbn, name, author_id, genre_id, quantity, publisher, price, date_received, description, cover);
                 
                 return book;
         } else {
@@ -351,19 +237,19 @@ public class BooksDTO {
     }
     
     // function to populate an arrayList with books by
-    public ArrayList<BooksDTO> bookListByName(String value) {
-        ArrayList<BooksDTO> bList = new ArrayList<>();
+    public ArrayList<BookDTO> bookListByName(String value) {
+        ArrayList<BookDTO> bList = new ArrayList<>();
         
         String selectQuery = "SELECT * FROM `books` WHERE `name` LIKE '%"+value+"%' OR `description` LIKE '%"+value+"%'";
         ResultSet rs;
         
-        DTO.Func_Class func = new Func_Class();
+        My_Functions.Func_Class func = new Func_Class();
         
         try {
             
             rs = func.getData(selectQuery);
             
-            BooksDTO book;
+            BookDTO book;
             
             while(rs.next()) {
                 int id = rs.getInt(1);
@@ -378,29 +264,27 @@ public class BooksDTO {
                 String description = rs.getString(10);
                 byte[] cover = rs.getBytes(11);
                 
-                book = new BooksDTO(id, isbn, name, author_id, genre_id, quantity, publisher, price, date_received, description, cover);
+                book = new BookDTO(id, isbn, name, author_id, genre_id, quantity, publisher, price, date_received, description, cover);
                 bList.add(book);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BooksDTO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BookDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return bList;
     }
     
-    public ArrayList<BooksDTO> bookListByDate(String dateFrom, String dateTo) {
-        ArrayList<BooksDTO> bList = new ArrayList<>();
+    public ArrayList<BookDTO> bookListByDate(String dateFrom, String dateTo) {
+        ArrayList<BookDTO> bList = new ArrayList<>();
         
         String selectQuery = "SELECT * FROM `books` WHERE `date_received` BETWEEN '"+ dateFrom + "' AND '" + dateTo + "'";
         ResultSet rs;
-        
-        DTO.Func_Class func = new Func_Class();
         
         try {
             
             rs = func.getData(selectQuery);
             
-            BooksDTO book;
+            BookDTO book;
             
             while(rs.next()) {
                 int id = rs.getInt(1);
@@ -415,11 +299,11 @@ public class BooksDTO {
                 String description = rs.getString(10);
                 byte[] cover = rs.getBytes(11);
                 
-                book = new BooksDTO(id, isbn, name, author_id, genre_id, quantity, publisher, price, date_received, description, cover);
+                book = new BookDTO(id, isbn, name, author_id, genre_id, quantity, publisher, price, date_received, description, cover);
                 bList.add(book);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BooksDTO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BookDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return bList;
@@ -431,7 +315,7 @@ public class BooksDTO {
         Statement st;
         
         try {
-            st = DB.getConnection().createStatement();
+            st = dBConnection.getConnection().createStatement();
             rs = st.executeQuery("SELECT `cover_image` FROM `books` ORDER BY `id` LIMIT 5");
             byte[] image;
             int i = 0;
@@ -441,7 +325,7 @@ public class BooksDTO {
                 ++i;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BooksDTO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BookDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -449,7 +333,7 @@ public class BooksDTO {
         
         String updateQuantityQuery = "UPDATE `books` SET `quantity`=? WHERE `id` =?";
             try {
-                PreparedStatement ps = DB.getConnection().prepareStatement(updateQuantityQuery);
+                PreparedStatement ps = dBConnection.getConnection().prepareStatement(updateQuantityQuery);
                 
                 ps.setInt(1, quantity);
                 ps.setInt(2, book_id);
@@ -460,7 +344,7 @@ public class BooksDTO {
                     JOptionPane.showMessageDialog(null, "the Book quantity can not updated", "Notification", 2);
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(BooksDTO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BookDTO.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
 }

@@ -4,11 +4,15 @@
  */
 package GUI;
 
-import DTO.AuthorsDTO;
-import DTO.BooksDTO;
-import DTO.Func_Class;
-import DTO.GenresDTO;
-import DTO.MembersDTO;
+import DAO.AuthorDAO;
+import DAO.BookDAO;
+import DAO.GenreDAO;
+import DAO.MemberDAO;
+import DTO.AuthorDTO;
+import DTO.BookDTO;
+import My_Functions.Func_Class;
+import DTO.GenreDTO;
+import DTO.MemberDTO;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
@@ -36,19 +40,19 @@ public class EditBookForm extends javax.swing.JFrame {
      * Creates new form MembersListForm
      */
     
-    DTO.MembersDTO member = new MembersDTO();
+    DAO.MemberDAO member = new MemberDAO();
     
-    DTO.Func_Class func = new Func_Class();
+    My_Functions.Func_Class func = new Func_Class();
     
-    DTO.AuthorsDTO author = new AuthorsDTO();
+    DAO.AuthorDAO author = new AuthorDAO();
     
     // create a varible to store the profile picture path
     String imagePath = null;
     
-    DTO.GenresDTO genre = new GenresDTO();
+    DAO.GenreDAO genre = new GenreDAO();
     HashMap<String, Integer> genresMap;
     
-    DTO.BooksDTO book = new BooksDTO();
+    DAO.BookDAO book = new BookDAO();
     
     public EditBookForm() {
         this.genresMap = genre.getGenresMap();
@@ -454,7 +458,7 @@ public class EditBookForm extends javax.swing.JFrame {
         // edit a book
         
         String isbn = jTextField_ISBN.getText();
-        BooksDTO book = new BooksDTO();
+        BookDAO book = new BookDAO();
 //        if(book.checkISBNexists(isbn)) {
 //            JOptionPane.showMessageDialog(null, "This ISBN already exists", "Wrong ISBN", 2);
 //        }
@@ -527,7 +531,7 @@ public class EditBookForm extends javax.swing.JFrame {
         try {
             String isbn = jTextField_ISBN.getText();
         
-            DTO.BooksDTO selectedBook = book.searchBookByISBN(isbn);
+            DTO.BookDTO selectedBook = book.searchBookByISBN(isbn);
 
             jTextField_Name.setText(selectedBook.getName());
             jTextField_Publisher.setText(selectedBook.getPublisher());

@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DTO;
+package DAO;
 
+import DTO.UserDTO;
+import My_Functions.Func_Class;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,81 +18,16 @@ import javax.swing.JOptionPane;
  *
  * @author Manh Hai
  */
-public class UsersDTO {
-    private int id;
-    private String firstName;
-    private String lastName;
-    private String userName;
-    private String password;
-    private String userType; // admin or simple user
-
-    public UsersDTO() {
-    }
-
-    public UsersDTO(int id, String firstName, String lastName, String userName, String password, String userType) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.userName = userName;
-        this.password = password;
-        this.userType = userType;
-    }
-
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+public class UserDAO {
+    DBConnection dBConnection;
     
-    DTO.Func_Class func = new Func_Class();
+    My_Functions.Func_Class func = new Func_Class();
     // insert a new user function
     public void addUser (String firstName, String lastName, String userName, String password, String userType) {
         
         String insertQuery = "INSERT INTO `users_table`(`firstName`, `lastName`, `userName`, `password`, `user_type`) VALUES (?, ?, ?, ?, ?)";
         try {
-            PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
+            PreparedStatement ps = dBConnection.getConnection().prepareStatement(insertQuery);
             ps.setString(1, firstName);
             ps.setString(2, lastName);
             ps.setString(3, userName);
@@ -103,7 +40,7 @@ public class UsersDTO {
                 JOptionPane.showMessageDialog(null, "User not added", "Notification", 2);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UsersDTO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -112,7 +49,7 @@ public class UsersDTO {
         
         String editQuery = "UPDATE `users_table` SET `firstName`=?,`lastName`=?,`userName`=?,`password`=?,`user_type`=? WHERE `id`=?";
         try {
-            PreparedStatement ps = DB.getConnection().prepareStatement(editQuery);
+            PreparedStatement ps = dBConnection.getConnection().prepareStatement(editQuery);
             
             ps.setString(1, firstName);
             ps.setString(2, lastName);
@@ -127,7 +64,7 @@ public class UsersDTO {
                 JOptionPane.showMessageDialog(null, "User not edited", "Notification", 2);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UsersDTO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -136,7 +73,7 @@ public class UsersDTO {
         
         String removeQuery = "DELETE FROM `users_table` WHERE `id` = ?";
         try {
-            PreparedStatement ps = DB.getConnection().prepareStatement(removeQuery);
+            PreparedStatement ps = dBConnection.getConnection().prepareStatement(removeQuery);
 
             ps.setInt(1, id);
             
@@ -146,7 +83,7 @@ public class UsersDTO {
                 JOptionPane.showMessageDialog(null, "User not deleted", "Notification", 2);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UsersDTO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -163,15 +100,15 @@ public class UsersDTO {
                 exist = true;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UsersDTO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return exist;
     }
     
     // function to populate an arrayList with users
-    public ArrayList<UsersDTO> userList() {
-        ArrayList<UsersDTO> uList = new ArrayList<>();
+    public ArrayList<UserDTO> userList() {
+        ArrayList<UserDTO> uList = new ArrayList<>();
         
         String selectQuery = "SELECT * FROM `users_table`";
         ResultSet rs;
@@ -180,25 +117,25 @@ public class UsersDTO {
             
             rs = func.getData(selectQuery);
             
-            UsersDTO user;
+            UserDTO user;
             
             while(rs.next()) {
                 // `id`, `firstName`, `lastName`, `userName`, `password`, `user_type`
-                user = new UsersDTO(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("userName"), rs.getString("password"), rs.getString("user_type"));
+                user = new UserDTO(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("userName"), rs.getString("password"), rs.getString("user_type"));
                 uList.add(user);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UsersDTO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return uList;
     }
     
     // create a function to allow the user login
-    public UsersDTO tryLogin(String username, String password) {
+    public UserDTO tryLogin(String username, String password) {
         String selectQuery = "SELECT * FROM `users_table` WHERE `userName`='"+username+"' AND `password`='"+password+"'";
         ResultSet rs;
-        UsersDTO user = null;
+        UserDTO user = null;
         
         try {
             
@@ -207,10 +144,10 @@ public class UsersDTO {
             while(rs.next()) {
                 
                 //`id`, `firstName`, `lastName`, `userName`, `password`, `user_type`
-                user = new UsersDTO(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("userName"), rs.getString("password"), rs.getString("user_type"));
+                user = new UserDTO(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("userName"), rs.getString("password"), rs.getString("user_type"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UsersDTO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return user;

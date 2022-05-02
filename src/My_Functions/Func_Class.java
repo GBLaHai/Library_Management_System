@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DTO;
+package My_Functions;
 
+import DTO.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -22,6 +23,8 @@ import javax.swing.JTable;
  * @author Manh Hai
  */
 public class Func_Class {
+    DAO.DBConnection dBConnection;
+    
     public void displayImageByPath(int width, int height, String imagePath, JLabel label) {
         
         ImageIcon imgIco;
@@ -60,7 +63,7 @@ public class Func_Class {
         ResultSet rs = null;
         
         try {
-            ps = DB.getConnection().prepareStatement(query);
+            ps = dBConnection.getConnection().prepareStatement(query);
             rs = ps.executeQuery();
         } catch (SQLException ex) {
             Logger.getLogger(Func_Class.class.getName()).log(Level.SEVERE, null, ex);
@@ -76,13 +79,13 @@ public class Func_Class {
         Statement st;
         
         try {
-            st = DB.getConnection().createStatement();
+            st = dBConnection.getConnection().createStatement();
             rs = st.executeQuery("SELECT COUNT(*) as total FROM `"+tableName+"`");
             if(rs.next()) {
                 total = rs.getInt("total");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BooksDTO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BookDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return total;

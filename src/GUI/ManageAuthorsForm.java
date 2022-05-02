@@ -4,8 +4,9 @@
  */
 package GUI;
 
-import DTO.AuthorsDTO;
-import DTO.Func_Class;
+import DAO.AuthorDAO;
+import DTO.AuthorDTO;
+import My_Functions.Func_Class;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
@@ -23,7 +24,7 @@ public class ManageAuthorsForm extends javax.swing.JFrame {
      * Creates new form ManageGenrisForm
      */
     
-    DTO.AuthorsDTO author = new AuthorsDTO();
+    DAO.AuthorDAO author = new AuthorDAO();
     
     public ManageAuthorsForm() {
         initComponents();
@@ -36,7 +37,7 @@ public class ManageAuthorsForm extends javax.swing.JFrame {
         jPanel1.setBorder(panelHeaderBorder);
         
         // display image in the top
-        DTO.Func_Class func = new Func_Class();
+        My_Functions.Func_Class func = new Func_Class();
         func.displayImageByPath(75, 60, "../My_Images/notepad.png", jLabel_FormTitle);
         
         // customize the jtable
@@ -403,7 +404,7 @@ public class ManageAuthorsForm extends javax.swing.JFrame {
 
     // create a function to populate the jtable with authors
     public void populateJtableWithAuthors() {
-        ArrayList<AuthorsDTO> authorList = author.authorList();
+        ArrayList<AuthorDTO> authorList = author.authorList();
         
         // jtable columns
         String[] colNames = {"ID","FIRST NAME", "LAST NAME", "EXPERTISE", "ABOUT"};

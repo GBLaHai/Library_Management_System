@@ -4,10 +4,11 @@
  */
 package GUI;
 
-import DTO.BooksDTO;
-import DTO.Func_Class;
+import DAO.BookDAO;
+import DAO.IssueBookDAO;
+import DAO.MemberDAO;
+import My_Functions.Func_Class;
 import DTO.IssueBookDTO;
-import DTO.MembersDTO;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -32,13 +33,13 @@ public class ReturnBookForm extends javax.swing.JFrame {
      * Creates new form MembersListForm
      */
     
-    DTO.MembersDTO member = new MembersDTO();
+    DAO.MemberDAO member = new MemberDAO();
     
-    DTO.Func_Class func = new Func_Class();
+    My_Functions.Func_Class func = new Func_Class();
     
-    DTO.BooksDTO book = new BooksDTO();
+    DAO.BookDAO book = new BookDAO();
     
-    DTO.IssueBookDTO issue_Book = new IssueBookDTO();
+    DAO.IssueBookDAO issue_Book = new IssueBookDAO();
     
     boolean book_exist = false;
     boolean member_exist = false;
@@ -461,7 +462,7 @@ public class ReturnBookForm extends javax.swing.JFrame {
                 issue_Book.updateIssue(bookID, memberID, "lost", issue_date, return_date, note);
                 
                 // update the book quantity
-                int quantity = new DTO.BooksDTO().getBookByID(bookID).getQuantity();
+                int quantity = new DAO.BookDAO().getBookByID(bookID).getQuantity();
                 book.setQuantity_Minus_One(bookID, quantity - 1);
                 
                 // reset fields
@@ -535,8 +536,8 @@ public class ReturnBookForm extends javax.swing.JFrame {
         // get values
         int book_id = Integer.parseInt(jTable_Issued_Books_.getValueAt(index, 0).toString());
         int member_id = Integer.parseInt(jTable_Issued_Books_.getValueAt(index, 1).toString());
-        DTO.BooksDTO selectedBook;
-        DTO.MembersDTO selectedMember;
+        DTO.BookDTO selectedBook;
+        DTO.MemberDTO selectedMember;
         try {
             selectedBook = book.getBookByID(book_id);
             jTextField_BookID_.setText(String.valueOf(selectedBook.getId()));

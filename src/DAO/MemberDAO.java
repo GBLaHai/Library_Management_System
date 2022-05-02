@@ -2,105 +2,34 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DTO;
+package DAO;
 
+import DTO.MemberDTO;
+import My_Functions.Func_Class;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 
 /**
  *
  * @author Manh Hai
  */
-public class MembersDTO {
-    private int id;
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
-    private String email;
-    private String gender;
-    private byte[] picture;
-
-    public MembersDTO() {
-    }
-
-    public MembersDTO(int id, String firstName, String lastName, String phoneNumber, String email, String gender, byte[] picture) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.gender = gender;
-        this.picture = picture;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public byte[] getPicture() {
-        return picture;
-    }
-
-    public void setPicture(byte[] picture) {
-        this.picture = picture;
-    }
+public class MemberDAO {
+    DBConnection dBConnection;
     
     // functions
     // insert a new member function
+    
+    My_Functions.Func_Class func = new Func_Class();
     public void addMember(String firstName, String lastName, String phoneNumber, String email, String gender, byte[] picture) {
         
         String insertQuery = "INSERT INTO `members`(`firstName`, `lastName`, `phoneNumber`, `email`, `gender`, `picture`) VALUES (?, ?, ?, ?, ?, ?)";
         try {
-            PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
+            PreparedStatement ps = dBConnection.getConnection().prepareStatement(insertQuery);
             ps.setString(1, firstName);
             ps.setString(2, lastName);
             ps.setString(3, phoneNumber);
@@ -114,7 +43,7 @@ public class MembersDTO {
                 JOptionPane.showMessageDialog(null, "Member not added", "Notification", 2);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(MembersDTO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MemberDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -123,7 +52,7 @@ public class MembersDTO {
         
         String editQuery = "UPDATE `members` SET `firstName`=?,`lastName`=?,`phoneNumber`=?,`email`=?,`gender`=?,`picture`=? WHERE `id` = ?";
         try {
-            PreparedStatement ps = DB.getConnection().prepareStatement(editQuery);
+            PreparedStatement ps = dBConnection.getConnection().prepareStatement(editQuery);
             
             ps.setString(1, firstName);
             ps.setString(2, lastName);
@@ -139,7 +68,7 @@ public class MembersDTO {
                 JOptionPane.showMessageDialog(null, "Member not edited", "Notification", 2);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(MembersDTO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MemberDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -148,7 +77,7 @@ public class MembersDTO {
         
         String removeQuery = "DELETE FROM `members` WHERE `id` = ?";
         try {
-            PreparedStatement ps = DB.getConnection().prepareStatement(removeQuery);
+            PreparedStatement ps = dBConnection.getConnection().prepareStatement(removeQuery);
 
             ps.setInt(1, id);
             
@@ -158,71 +87,66 @@ public class MembersDTO {
                 JOptionPane.showMessageDialog(null, "Member not deleted", "Notification", 2);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(MembersDTO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MemberDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     // get Menber by ID
-    public MembersDTO getMemberByID(int id) throws SQLException {
-        Func_Class func = new Func_Class();
+    public MemberDTO getMemberByID(int id) throws SQLException {
         String selectQuery = "SELECT * FROM `members` WHERE `id` = " + id;
         
         ResultSet rs = func.getData(selectQuery);
         
         if(rs.next()) {
-            return new MembersDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getBytes(7));
+            return new MemberDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getBytes(7));
         } else {
             return null;
         }
     }
     
     // function to populate an arrayList with members
-    public ArrayList<MembersDTO> memberList() {
-        ArrayList<MembersDTO> mList = new ArrayList<>();
+    public ArrayList<MemberDTO> memberList() {
+        ArrayList<MemberDTO> mList = new ArrayList<>();
         
         String selectQuery = "SELECT * FROM `members`";
         ResultSet rs;
-        
-        DTO.Func_Class func = new Func_Class();
         
         try {
             
             rs = func.getData(selectQuery);
             
-            MembersDTO member;
+            MemberDTO member;
             
             while(rs.next()) {
-                member = new MembersDTO(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("phoneNumber"), rs.getString("email"), rs.getString("gender"), rs.getBytes("picture"));
+                member = new MemberDTO(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("phoneNumber"), rs.getString("email"), rs.getString("gender"), rs.getBytes("picture"));
                 mList.add(member);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(MembersDTO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MemberDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return mList;
     }
     
     // function to populate an arrayList with members by
-    public ArrayList<MembersDTO> memberListBy(String value) {
-        ArrayList<MembersDTO> mList = new ArrayList<>();
+    public ArrayList<MemberDTO> memberListBy(String value) {
+        ArrayList<MemberDTO> mList = new ArrayList<>();
         
         String selectQuery = "SELECT * FROM `members` WHERE `firstName` LIKE '%"+value+"%' OR `lastName` LIKE '%"+value+"%'";
         ResultSet rs;
-        
-        DTO.Func_Class func = new Func_Class();
         
         try {
             
             rs = func.getData(selectQuery);
             
-            MembersDTO member;
+            MemberDTO member;
             
             while(rs.next()) {
-                member = new MembersDTO(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("phoneNumber"), rs.getString("email"), rs.getString("gender"), rs.getBytes("picture"));
+                member = new MemberDTO(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("phoneNumber"), rs.getString("email"), rs.getString("gender"), rs.getBytes("picture"));
                 mList.add(member);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(MembersDTO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MemberDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return mList;

@@ -4,10 +4,11 @@
  */
 package GUI;
 
-import DTO.AuthorsDTO;
-import DTO.BooksDTO;
-import DTO.Func_Class;
-import DTO.GenresDTO;
+import DAO.AuthorDAO;
+import DAO.BookDAO;
+import DAO.GenreDAO;
+import DTO.BookDTO;
+import My_Functions.Func_Class;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,13 +27,13 @@ public class BooksListForm extends javax.swing.JFrame {
      * Creates new form MembersListForm
      */
     
-    DTO.BooksDTO book = new BooksDTO();
+    DAO.BookDAO book = new BookDAO();
     
-    DTO.Func_Class func = new Func_Class();
+    My_Functions.Func_Class func = new Func_Class();
     
-    DTO.AuthorsDTO author = new AuthorsDTO();
+    DAO.AuthorDAO author = new AuthorDAO();
     
-    DTO.GenresDTO genre = new GenresDTO();
+    DAO.GenreDAO genre = new GenreDAO();
     
     public BooksListForm() {
         initComponents();
@@ -340,7 +341,7 @@ public class BooksListForm extends javax.swing.JFrame {
             int rowIndex = jTable_BooksList_.getSelectedRow();
             int id = Integer.parseInt(jTable_BooksList_.getModel().getValueAt(rowIndex, 0).toString());
             // get book data
-            BooksDTO selectedBook = book.getBookByID(id);
+            BookDTO selectedBook = book.getBookByID(id);
             
             if(selectedBook != null) {
                 jLabel_ISBN.setText(selectedBook.getIsbn());
@@ -390,7 +391,7 @@ public class BooksListForm extends javax.swing.JFrame {
     // create a function to populate the jtable with books
     public void populateJtableWithBooks() {
         
-        ArrayList<BooksDTO> bookList = book.bookList();
+        ArrayList<BookDTO> bookList = book.bookList();
         
         // jtable columns
         String[] colNames = {"ID","ISBN", "Title", "Author", "Genre", "Quantity", "Publisher", "Price", "Date-RCV"};
@@ -423,7 +424,7 @@ public class BooksListForm extends javax.swing.JFrame {
     
     public void populateJtableWithBooksByName(String value) {
         
-        ArrayList<BooksDTO> bookList = book.bookListByName(value);
+        ArrayList<BookDTO> bookList = book.bookListByName(value);
         
         // jtable columns
         String[] colNames = {"ID","ISBN", "Title", "Author", "Genre", "Quantity", "Publisher", "Price", "Date-RCV"};
@@ -456,7 +457,7 @@ public class BooksListForm extends javax.swing.JFrame {
     
     public void populateJtableWithBooksByDate(String dateFrom, String dateTo) {
         
-        ArrayList<BooksDTO> bookList = book.bookListByDate(dateFrom, dateTo);
+        ArrayList<BookDTO> bookList = book.bookListByDate(dateFrom, dateTo);
         
         // jtable columns
         String[] colNames = {"ID","ISBN", "Title", "Author", "Genre", "Quantity", "Publisher", "Price", "Date-RCV"};

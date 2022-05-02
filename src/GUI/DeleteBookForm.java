@@ -4,10 +4,10 @@
  */
 package GUI;
 
-import DTO.BooksDTO;
-import DTO.Func_Class;
-import DTO.GenresDTO;
-import DTO.MembersDTO;
+import DAO.BookDAO;
+import DAO.GenreDAO;
+import DAO.MemberDAO;
+import My_Functions.Func_Class;
 import java.awt.Color;
 import java.util.HashMap;
 import javax.swing.BorderFactory;
@@ -24,17 +24,17 @@ public class DeleteBookForm extends javax.swing.JFrame {
      * Creates new form MembersListForm
      */
     
-    DTO.MembersDTO member = new MembersDTO();
+    DAO.MemberDAO member = new MemberDAO();
     
-    DTO.Func_Class func = new Func_Class();
+    My_Functions.Func_Class func = new Func_Class();
     
     // create a varible to store the profile picture path
     String imagePath = null;
     
-    DTO.GenresDTO genre = new GenresDTO();
+    DAO.GenreDAO genre = new GenreDAO();
     HashMap<String, Integer> genresMap;
     
-    DTO.BooksDTO book = new BooksDTO();
+    DAO.BookDAO book = new BookDAO();
     
     public DeleteBookForm() {
         this.genresMap = genre.getGenresMap();
@@ -199,7 +199,7 @@ public class DeleteBookForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_Cancel_MouseClicked
 
     private void jButton_Add_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Add_ActionPerformed
-        DTO.BooksDTO book = new BooksDTO();
+        DAO.BookDAO book = new BookDAO();
         String isbn = jTextField_ISBN.getText();
         
         try {

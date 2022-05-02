@@ -4,8 +4,9 @@
  */
 package GUI;
 
-import DTO.MembersDTO;
-import DTO.Func_Class;
+import DAO.MemberDAO;
+import DTO.MemberDTO;
+import My_Functions.Func_Class;
 import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
@@ -18,7 +19,7 @@ import javax.swing.border.Border;
 public class DeleteMemberForm extends javax.swing.JFrame {
 
     // create a member object
-    DTO.MembersDTO member = new MembersDTO();
+    DAO.MemberDAO member = new MemberDAO();
     
     Func_Class func = new Func_Class();
     
@@ -36,7 +37,7 @@ public class DeleteMemberForm extends javax.swing.JFrame {
         jPanel1.setBorder(panelHeaderBorder);
         
         // display image in the top
-        DTO.Func_Class func = new Func_Class();
+        My_Functions.Func_Class func = new Func_Class();
         func.displayImageByPath(90, 60, "../My_Images/members.png", jLabel_FormTitle);
         
         // hide the label "empty name message"

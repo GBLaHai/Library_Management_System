@@ -4,22 +4,29 @@
  */
 package DTO;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import java.sql.ResultSet;
+import java.util.HashMap;
+
 /**
  *
  * @author Manh Hai
  */
-public class PublishersDTO {
+public class GenreDTO {
     private int id;
     private String name;
-    private String address;
 
-    public PublishersDTO() {
+    public GenreDTO() {
     }
 
-    public PublishersDTO(int id, String name, String address) {
+    public GenreDTO(int id, String name) {
         this.id = id;
         this.name = name;
-        this.address = address;
     }
 
     public int getId() {
@@ -36,13 +43,5 @@ public class PublishersDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 }

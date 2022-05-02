@@ -5,8 +5,9 @@
 package GUI;
 
 
-import DTO.Func_Class;
-import DTO.UsersDTO;
+import DAO.UserDAO;
+import My_Functions.Func_Class;
+import DTO.UserDTO;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,7 +26,7 @@ public class LoginForm extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         
         // display image in the login top
-        DTO.Func_Class func = new Func_Class();
+        My_Functions.Func_Class func = new Func_Class();
         func.displayImageByPath(jLabel_login_logo.getWidth(), jLabel_login_logo.getHeight(), "../My_Images/image-library.png", jLabel_login_logo);
     }
 
@@ -164,7 +165,9 @@ public class LoginForm extends javax.swing.JFrame {
         else 
         {
                 
-                DTO.UsersDTO user = new UsersDTO().tryLogin(username, password);              
+                DAO.UserDAO userCheck = new UserDAO();
+                DTO.UserDTO user = new UserDTO();
+                user = userCheck.tryLogin(username, password);              
                 DashboardForm dash_f = new DashboardForm();
                 
                 // if the user exist

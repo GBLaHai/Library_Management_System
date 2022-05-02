@@ -4,10 +4,11 @@
  */
 package GUI;
 
-import DTO.BooksDTO;
-import DTO.Func_Class;
-import DTO.GenresDTO;
-import DTO.MembersDTO;
+import DAO.BookDAO;
+import DAO.GenreDAO;
+import DTO.BookDTO;
+import My_Functions.Func_Class;
+import DTO.MemberDTO;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
@@ -34,17 +35,17 @@ public class AddBookForm extends javax.swing.JFrame {
      * Creates new form MembersListForm
      */
     
-    DTO.MembersDTO member = new MembersDTO();
+    DTO.MemberDTO member = new MemberDTO();
     
-    DTO.Func_Class func = new Func_Class();
+    My_Functions.Func_Class func = new Func_Class();
     
     // create a varible to store the profile picture path
     String imagePath = null;
     
-    DTO.GenresDTO genre = new GenresDTO();
+    DAO.GenreDAO genre = new GenreDAO();
     HashMap<String, Integer> genresMap;
     
-    DTO.BooksDTO book = new BooksDTO();
+    DTO.BookDTO book = new BookDTO();
     
     public AddBookForm() {
         this.genresMap = genre.getGenresMap();
@@ -430,7 +431,7 @@ public class AddBookForm extends javax.swing.JFrame {
         // add a new book
         
         String isbn = jTextField_ISBN.getText();
-        BooksDTO book = new BooksDTO();
+        BookDAO book = new BookDAO();
         if(book.checkISBNexists(isbn)) {
             JOptionPane.showMessageDialog(null, "This ISBN already exists", "Notification", 2);
         }

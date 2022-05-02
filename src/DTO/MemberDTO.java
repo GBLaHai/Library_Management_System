@@ -4,21 +4,38 @@
  */
 package DTO;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
 /**
  *
  * @author Manh Hai
  */
-public class LibrariansDTO {
+public class MemberDTO {
     private int id;
     private String firstName;
     private String lastName;
     private String phoneNumber;
     private String email;
     private String gender;
-    private String address;
     private byte[] picture;
 
-    public LibrariansDTO() {
+    public MemberDTO() {
+    }
+
+    public MemberDTO(int id, String firstName, String lastName, String phoneNumber, String email, String gender, byte[] picture) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.gender = gender;
+        this.picture = picture;
     }
 
     public int getId() {
@@ -69,14 +86,6 @@ public class LibrariansDTO {
         this.gender = gender;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public byte[] getPicture() {
         return picture;
     }
@@ -84,6 +93,4 @@ public class LibrariansDTO {
     public void setPicture(byte[] picture) {
         this.picture = picture;
     }
-    
-    
 }
