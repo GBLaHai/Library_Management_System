@@ -4,8 +4,9 @@
  */
 package GUI;
 
-import DTO.Member;
-import DTO.Func_Class;
+import DAO.MemberDAO;
+import DTO.MemberDTO;
+import My_Functions.Func_Class;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +28,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class EditMemberForm extends javax.swing.JFrame {
 
     // create a member object
-    Member member = new Member();
+    DAO.MemberDAO member = new MemberDAO();
     
     Func_Class func = new Func_Class();
     
@@ -49,7 +50,7 @@ public class EditMemberForm extends javax.swing.JFrame {
         jLabel_Image.setBorder(lableImageHeaderBorder);
         
         // display image in the top
-        Func_Class func = new Func_Class();
+        My_Functions.Func_Class func = new Func_Class();
         func.displayImageByPath(90, 60, "../My_Images/members.png", jLabel_FormTitle);
         
         // hide the label "empty name message"
@@ -459,7 +460,7 @@ public class EditMemberForm extends javax.swing.JFrame {
             // search member by ID and display data
             int id = Integer.parseInt(jTextField_ID.getText());
             // get member data
-            Member selectedMember = member.getMemberByID(id);
+            MemberDTO selectedMember = member.getMemberByID(id);
             
             if(selectedMember != null) {
                 jTextField_ID.setText(selectedMember.getId()+"");

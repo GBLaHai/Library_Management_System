@@ -4,8 +4,9 @@
  */
 package GUI;
 
-import DTO.Func_Class;
-import DTO.Users;
+import DAO.UserDAO;
+import My_Functions.Func_Class;
+import DTO.UserDTO;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
@@ -23,7 +24,7 @@ public class ManageUsersForm extends javax.swing.JFrame {
      * Creates new form ManageGenrisForm
      */
     
-    Users user = new Users();
+    DAO.UserDAO user = new UserDAO();
     
     public ManageUsersForm() {
         initComponents();
@@ -36,7 +37,7 @@ public class ManageUsersForm extends javax.swing.JFrame {
         jPanel1.setBorder(panelHeaderBorder);
         
         // display image in the top
-        Func_Class func = new Func_Class();
+        My_Functions.Func_Class func = new Func_Class();
         func.displayImageByPath(75, 60, "../My_Images/users-group.png", jLabel_FormTitle);
         
         // customize the jtable
@@ -513,7 +514,7 @@ public class ManageUsersForm extends javax.swing.JFrame {
 
     // create a function to populate the jtable with users
     public void populateJtableWithUsers() {
-        ArrayList<Users> userList = user.userList();
+        ArrayList<UserDTO> userList = user.userList();
         
         // jtable columns
         String[] colNames = {"ID","F-NAME", "L-NAME", "U-NAME", "PASS", "TYPE"};

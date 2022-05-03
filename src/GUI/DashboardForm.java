@@ -4,8 +4,8 @@
  */
 package GUI;
 
-import DTO.Book;
-import DTO.Func_Class;
+import DAO.BookDAO;
+import My_Functions.Func_Class;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
@@ -27,9 +27,9 @@ public class DashboardForm extends javax.swing.JFrame {
     // the button non border
     Border buttonBorder0 = BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(36,37,42));
     
-    Func_Class func = new Func_Class();
+    My_Functions.Func_Class func = new Func_Class();
     
-    Book book = new Book();
+    DAO.BookDAO book = new BookDAO();
 
     // create the jlabels array to display the latest 5 books image
     JLabel[] lables_tab = new JLabel[5];
@@ -700,7 +700,7 @@ public class DashboardForm extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel_Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jPanel_Menu, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel_Welcome_User_)

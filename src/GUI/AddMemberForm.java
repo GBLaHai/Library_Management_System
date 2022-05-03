@@ -4,8 +4,8 @@
  */
 package GUI;
 
-import DTO.Member;
-import DTO.Func_Class;
+import DAO.MemberDAO;
+import My_Functions.Func_Class;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +27,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class AddMemberForm extends javax.swing.JFrame {
 
     // create a member object
-    Member member = new Member();
+    DAO.MemberDAO member = new MemberDAO();
     
     Func_Class func = new Func_Class();
     
@@ -49,7 +49,7 @@ public class AddMemberForm extends javax.swing.JFrame {
         jLabel_Image.setBorder(labelImageBorder);
         
         // display image in the top
-        Func_Class func = new Func_Class();
+        My_Functions.Func_Class func = new Func_Class();
         func.displayImageByPath(90, 60, "../My_Images/members.png", jLabel_FormTitle);
 
         func.displayImageByPath(jLabel_Image.getWidth(), jLabel_Image.getHeight(), "../My_Images/default-user.png", jLabel_Image);

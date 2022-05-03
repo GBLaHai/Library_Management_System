@@ -4,8 +4,9 @@
  */
 package GUI;
 
-import DTO.Func_Class;
-import DTO.Member;
+import DAO.MemberDAO;
+import My_Functions.Func_Class;
+import DTO.MemberDTO;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,9 +25,9 @@ public class MembersListForm extends javax.swing.JFrame {
      * Creates new form MembersListForm
      */
     
-    Member member = new Member();
+    DAO.MemberDAO member = new MemberDAO();
     
-    Func_Class func = new Func_Class();
+    My_Functions.Func_Class func = new Func_Class();
     
     public MembersListForm() {
         initComponents();
@@ -243,7 +244,7 @@ public class MembersListForm extends javax.swing.JFrame {
             int rowIndex = jTable_MembersList_.getSelectedRow();
             int id = Integer.parseInt(jTable_MembersList_.getModel().getValueAt(rowIndex, 0).toString());
             // get member data
-            Member selectedMember = member.getMemberByID(id);
+            MemberDTO selectedMember = member.getMemberByID(id);
             
             if(selectedMember != null) {
                 jLabel_Fullname.setText(selectedMember.getFirstName() + " " + selectedMember.getLastName());
@@ -268,7 +269,7 @@ public class MembersListForm extends javax.swing.JFrame {
     // create a function to populate the jtable with members
     public void populateJtableWithMembers() {
         
-        ArrayList<Member> memberList = member.memberList();
+        ArrayList<MemberDTO> memberList = member.memberList();
         
         // jtable columns
         String[] colNames = {"ID","FIRST NAME", "LAST NAME", "PHONE", "EMAIL", "GENDER"};
@@ -291,7 +292,7 @@ public class MembersListForm extends javax.swing.JFrame {
     
     public void populateJtableWithMembersBy(String value) {
         
-        ArrayList<Member> memberList = member.memberListBy(value);
+        ArrayList<MemberDTO> memberList = member.memberListBy(value);
         
         // jtable columns
         String[] colNames = {"ID","FIRST NAME", "LAST NAME", "PHONE", "EMAIL", "GENDER"};

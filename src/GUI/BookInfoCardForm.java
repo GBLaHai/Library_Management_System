@@ -4,10 +4,10 @@
  */
 package GUI;
 
-import DTO.Author;
-import DTO.Book;
-import DTO.Func_Class;
-import DTO.Genre;
+import DAO.AuthorDAO;
+import DAO.BookDAO;
+import DAO.GenreDAO;
+import My_Functions.Func_Class;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -25,13 +25,13 @@ public class BookInfoCardForm extends javax.swing.JFrame {
      * Creates new form MembersListForm
      */
     
-    Book book = new Book();
+    DAO.BookDAO book = new BookDAO();
     
-    Func_Class func = new Func_Class();
+    My_Functions.Func_Class func = new Func_Class();
     
-    Author author = new Author();
+    DAO.AuthorDAO author = new AuthorDAO();
     
-    Genre genre = new Genre();
+    DAO.GenreDAO genre = new GenreDAO();
     
     private int book_id;
     
@@ -64,7 +64,7 @@ public class BookInfoCardForm extends javax.swing.JFrame {
     // create a function to display the book info
     public void displayBookInfo(int book_id) {
         try {
-            Book selectedBook = book.getBookByID(book_id);
+            DTO.BookDTO selectedBook = book.getBookByID(book_id);
             
             if(selectedBook != null) {
                 jLabel_ISBN.setText(selectedBook.getIsbn());

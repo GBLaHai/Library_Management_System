@@ -4,10 +4,11 @@
  */
 package GUI;
 
-import DTO.Book;
-import DTO.Func_Class;
-import DTO.Issue_Book;
-import DTO.Member;
+import DAO.BookDAO;
+import DAO.IssueBookDAO;
+import DAO.MemberDAO;
+import My_Functions.Func_Class;
+import DTO.IssueBookDTO;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -32,13 +33,13 @@ public class ReturnBookForm extends javax.swing.JFrame {
      * Creates new form MembersListForm
      */
     
-    Member member = new Member();
+    DAO.MemberDAO member = new MemberDAO();
     
-    Func_Class func = new Func_Class();
+    My_Functions.Func_Class func = new Func_Class();
     
-    Book book = new Book();
+    DAO.BookDAO book = new BookDAO();
     
-    Issue_Book issue_Book = new Issue_Book();
+    DAO.IssueBookDAO issue_Book = new IssueBookDAO();
     
     boolean book_exist = false;
     boolean member_exist = false;
@@ -461,7 +462,7 @@ public class ReturnBookForm extends javax.swing.JFrame {
                 issue_Book.updateIssue(bookID, memberID, "lost", issue_date, return_date, note);
                 
                 // update the book quantity
-                int quantity = new Book().getBookByID(bookID).getQuantity();
+                int quantity = new DAO.BookDAO().getBookByID(bookID).getQuantity();
                 book.setQuantity_Minus_One(bookID, quantity - 1);
                 
                 // reset fields
@@ -535,8 +536,8 @@ public class ReturnBookForm extends javax.swing.JFrame {
         // get values
         int book_id = Integer.parseInt(jTable_Issued_Books_.getValueAt(index, 0).toString());
         int member_id = Integer.parseInt(jTable_Issued_Books_.getValueAt(index, 1).toString());
-        Book selectedBook;
-        Member selectedMember;
+        DTO.BookDTO selectedBook;
+        DTO.MemberDTO selectedMember;
         try {
             selectedBook = book.getBookByID(book_id);
             jTextField_BookID_.setText(String.valueOf(selectedBook.getId()));
@@ -614,7 +615,7 @@ public class ReturnBookForm extends javax.swing.JFrame {
     
     // create a function to populate the jtable with issued books
     public void populateJtableWithIssuedBooks(String status) {
-        ArrayList<Issue_Book> issuedBooksList = issue_Book.issuedBookList(status);
+        ArrayList<IssueBookDTO> issuedBooksList = issue_Book.issuedBookList(status);
         
         
         // jtable columns

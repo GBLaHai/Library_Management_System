@@ -4,8 +4,9 @@
  */
 package GUI;
 
-import DTO.Func_Class;
-import DTO.Genre;
+import DAO.GenreDAO;
+import My_Functions.Func_Class;
+import DTO.GenreDTO;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
@@ -23,7 +24,7 @@ public class ManageGenresForm extends javax.swing.JFrame {
      * Creates new form ManageGenrisForm
      */
     
-    Genre genre = new Genre();
+    DAO.GenreDAO genre = new GenreDAO();
     
     public ManageGenresForm() {
         initComponents();
@@ -36,7 +37,7 @@ public class ManageGenresForm extends javax.swing.JFrame {
         jPanel1.setBorder(panelHeaderBorder);
         
         // display image in the top
-        Func_Class func = new Func_Class();
+        My_Functions.Func_Class func = new Func_Class();
         func.displayImageByPath(75, 60, "../My_Images/hierarchy.png", jLabel_FormTitle);
         
         // customize the jtable
@@ -319,7 +320,7 @@ public class ManageGenresForm extends javax.swing.JFrame {
 
     // create a function to populate the jtable with genres
     public void populateJtableWithGenres() {
-        ArrayList<Genre> genreList = genre.genreList();
+        ArrayList<GenreDTO> genreList = genre.genreList();
         
         // jtable columns
         String[] colNames = {"ID","NAME"};

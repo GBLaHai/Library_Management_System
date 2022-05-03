@@ -4,10 +4,10 @@
  */
 package GUI;
 
-import DTO.Book;
-import DTO.Func_Class;
-import DTO.Issue_Book;
-import DTO.Member;
+import DAO.BookDAO;
+import DAO.IssueBookDAO;
+import DAO.MemberDAO;
+import My_Functions.Func_Class;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -27,13 +27,13 @@ public class IssueBookForm extends javax.swing.JFrame {
      * Creates new form MembersListForm
      */
     
-    Member member = new Member();
+    DAO.MemberDAO member = new MemberDAO();
     
-    Func_Class func = new Func_Class();
+    My_Functions.Func_Class func = new Func_Class();
     
-    Book book = new Book();
+    DAO.BookDAO book = new BookDAO();
     
-    Issue_Book issue_Book = new Issue_Book();
+    DAO.IssueBookDAO issue_Book = new IssueBookDAO();
     
     boolean book_exist = false;
     boolean member_exist = false;
@@ -412,7 +412,7 @@ public class IssueBookForm extends javax.swing.JFrame {
         } else {
             int book_id = Integer.parseInt(jTextField_BookID_.getText());
             try {
-                Book selected_book = book.getBookByID(book_id);
+                DTO.BookDTO selected_book = book.getBookByID(book_id);
                 if(selected_book != null) {
                     jLabel_BookName_.setVisible(true);
                     jLabel_BookName_.setText(selected_book.getName());
@@ -456,7 +456,7 @@ public class IssueBookForm extends javax.swing.JFrame {
         } else {
             int member_id = Integer.parseInt(jTextField_MemberID_.getText());
             try {
-                Member selected_member = member.getMemberByID(member_id);
+                DTO.MemberDTO selected_member = member.getMemberByID(member_id);
                 if(selected_member != null) {
                     String fullname = selected_member.getFirstName() + " " + selected_member.getLastName();
                     jLabel_MemberFullname_.setText(fullname);

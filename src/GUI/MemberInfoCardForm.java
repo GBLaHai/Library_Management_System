@@ -4,8 +4,9 @@
  */
 package GUI;
 
-import DTO.Func_Class;
-import DTO.Member;
+import DAO.MemberDAO;
+import My_Functions.Func_Class;
+import DTO.MemberDTO;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -23,9 +24,9 @@ public class MemberInfoCardForm extends javax.swing.JFrame {
      * Creates new form MembersListForm
      */
     
-    Func_Class func = new Func_Class();
+    My_Functions.Func_Class func = new Func_Class();
     
-    Member member = new Member();
+    DAO.MemberDAO member = new MemberDAO();
     
     private int member_id;
     
@@ -55,7 +56,7 @@ public class MemberInfoCardForm extends javax.swing.JFrame {
     // create a function to display the book info
     public void displayMemberInfo(int member_id) {
         try {
-            Member selectedMember = member.getMemberByID(member_id);
+            DTO.MemberDTO selectedMember = member.getMemberByID(member_id);
             
             if(selectedMember != null) {
                 
