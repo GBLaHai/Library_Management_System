@@ -2,7 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+<<<<<<<< HEAD:src/DTO/Genre.java
+package DTO;
+========
 package DAO;
+>>>>>>>> f6d5992fb4773e699bffec41be30a4476c7838ed:src/DAO/GenreDAO.java
 
 import DTO.GenreDTO;
 import My_Functions.Func_Class;
@@ -24,7 +28,11 @@ public class GenreDAO {
     
     // functions
     
+<<<<<<<< HEAD:src/DTO/Genre.java
+    Func_Class func = new Func_Class();
+========
     My_Functions.Func_Class func = new Func_Class();
+>>>>>>>> f6d5992fb4773e699bffec41be30a4476c7838ed:src/DAO/GenreDAO.java
     // insert a new genre function
     public void addGenre(String name) {
         

@@ -2,7 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+<<<<<<<< HEAD:src/DTO/Member.java
+package DTO;
+========
 package DAO;
+>>>>>>>> f6d5992fb4773e699bffec41be30a4476c7838ed:src/DAO/MemberDAO.java
 
 import DTO.MemberDTO;
 import My_Functions.Func_Class;
@@ -111,6 +115,11 @@ public class MemberDAO {
         String selectQuery = "SELECT * FROM `members`";
         ResultSet rs;
         
+<<<<<<<< HEAD:src/DTO/Member.java
+        Func_Class func = new Func_Class();
+        
+========
+>>>>>>>> f6d5992fb4773e699bffec41be30a4476c7838ed:src/DAO/MemberDAO.java
         try {
             
             rs = func.getData(selectQuery);
@@ -135,6 +144,11 @@ public class MemberDAO {
         String selectQuery = "SELECT * FROM `members` WHERE `firstName` LIKE '%"+value+"%' OR `lastName` LIKE '%"+value+"%'";
         ResultSet rs;
         
+<<<<<<<< HEAD:src/DTO/Member.java
+        Func_Class func = new Func_Class();
+        
+========
+>>>>>>>> f6d5992fb4773e699bffec41be30a4476c7838ed:src/DAO/MemberDAO.java
         try {
             
             rs = func.getData(selectQuery);

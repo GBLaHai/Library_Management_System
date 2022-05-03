@@ -2,7 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+<<<<<<<< HEAD:src/DTO/Users.java
+package DTO;
+========
 package DAO;
+>>>>>>>> f6d5992fb4773e699bffec41be30a4476c7838ed:src/DAO/UserDAO.java
 
 import DTO.UserDTO;
 import My_Functions.Func_Class;
@@ -21,7 +25,11 @@ import javax.swing.JOptionPane;
 public class UserDAO {
     DBConnection dBConnection;
     
+<<<<<<<< HEAD:src/DTO/Users.java
+    Func_Class func = new Func_Class();
+========
     My_Functions.Func_Class func = new Func_Class();
+>>>>>>>> f6d5992fb4773e699bffec41be30a4476c7838ed:src/DAO/UserDAO.java
     // insert a new user function
     public void addUser (String firstName, String lastName, String userName, String password, String userType) {
         

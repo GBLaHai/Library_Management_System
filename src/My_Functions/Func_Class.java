@@ -2,7 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+<<<<<<<< HEAD:src/DTO/Func_Class.java
+package DTO;
+========
 package My_Functions;
+>>>>>>>> f6d5992fb4773e699bffec41be30a4476c7838ed:src/My_Functions/Func_Class.java
 
 import DTO.*;
 import java.awt.Color;

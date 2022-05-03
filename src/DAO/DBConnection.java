@@ -2,7 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+<<<<<<<< HEAD:src/DTO/DB.java
+package DTO;
+========
 package DAO;
+>>>>>>>> f6d5992fb4773e699bffec41be30a4476c7838ed:src/DAO/DBConnection.java
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 import java.sql.Connection;
